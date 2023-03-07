@@ -16,18 +16,27 @@ import org.slf4j.Logger;
 public class UsersController {
     @Autowired
     UsersService _user;
-    EnvironmentService _environmentService;
+
+    @Autowired
+    @Qualifier("devEnvironmentService")
+    EnvironmentService _environmentService1;
+
+    @Autowired
+    @Qualifier("devEnvironmentService")
+    EnvironmentService _environmentService2;
 
     public final Logger logger=LoggerFactory.getLogger(UsersController.class);
 
-    UsersController(@Qualifier("devEnvironmentService") EnvironmentService environmentService){
-        _environmentService=environmentService;
+    UsersController(){
         logger.info("Se inicializa constructor");
-        logger.info("Ambiente configurado: "+ _environmentService.getEnvironmentName());
     }
 
     @GetMapping("/ping")
     public String ping(){
+        logger.info("Ambiente configurado: "+ _environmentService1.getEnvironmentName());
+        logger.info("Ambiente configurado: "+ _environmentService2.getEnvironmentName());
+        var sonIguales=_environmentService1==_environmentService2;
+        logger.info("Son iguales las dependencias? " + sonIguales);
         return "Hola desde controlador usuarios";
     }
 
