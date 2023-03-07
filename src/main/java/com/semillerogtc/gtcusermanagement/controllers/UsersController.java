@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.semillerogtc.gtcusermanagement.services.UsersService;
 import com.semillerogtc.gtcusermanagement.domain.Usuario;
+import com.semillerogtc.gtcusermanagement.common.EnvironmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -13,10 +14,15 @@ import org.slf4j.Logger;
 
 public class UsersController {
     @Autowired
+    EnvironmentService _environmentService;
     UsersService _user;
     public final Logger logger=LoggerFactory.getLogger(UsersController.class);
 
-    UsersController(){logger.info("Se inicializa constructor");}
+    UsersController(EnvironmentService environmentService){
+        _environmentService=environmentService;
+        logger.info("Se inicializa constructor");
+        logger.info("Ambiente configurado: "+ _environmentService.getEnvironmentName());
+    }
 
     @GetMapping("/ping")
     public String ping(){
