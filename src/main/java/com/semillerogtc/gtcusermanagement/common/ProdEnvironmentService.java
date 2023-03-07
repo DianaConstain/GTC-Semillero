@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 
 @Service
-@Profile("prod")
+//@Profile("prod")
 @PropertySource("classpath:applicationprod.properties")
 public class ProdEnvironmentService implements EnvironmentService{
     @Value("${environment.name:0}") 

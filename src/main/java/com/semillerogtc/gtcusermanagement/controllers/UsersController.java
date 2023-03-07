@@ -6,6 +6,7 @@ import com.semillerogtc.gtcusermanagement.services.UsersService;
 import com.semillerogtc.gtcusermanagement.domain.Usuario;
 import com.semillerogtc.gtcusermanagement.common.EnvironmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -14,11 +15,12 @@ import org.slf4j.Logger;
 
 public class UsersController {
     @Autowired
-    EnvironmentService _environmentService;
     UsersService _user;
+    EnvironmentService _environmentService;
+
     public final Logger logger=LoggerFactory.getLogger(UsersController.class);
 
-    UsersController(EnvironmentService environmentService){
+    UsersController(@Qualifier("devEnvironmentService") EnvironmentService environmentService){
         _environmentService=environmentService;
         logger.info("Se inicializa constructor");
         logger.info("Ambiente configurado: "+ _environmentService.getEnvironmentName());
