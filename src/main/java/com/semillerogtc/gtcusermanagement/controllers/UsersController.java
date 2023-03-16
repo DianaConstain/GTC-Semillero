@@ -1,9 +1,11 @@
 package com.semillerogtc.gtcusermanagement.controllers;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.semillerogtc.gtcusermanagement.services.UsersService;
 import com.semillerogtc.gtcusermanagement.domain.Usuario;
+import com.semillerogtc.gtcusermanagement.domain.UsuarioDto;
 import com.semillerogtc.gtcusermanagement.common.EnvironmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.slf4j.LoggerFactory;
+
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 
 @RestController
@@ -69,8 +74,9 @@ public class UsersController {
         return _user.registrarUsuario(user);
     }
 
-    @PostMapping()
-    public boolean registrarUsuario(){
+    @PostMapping("/{token}")
+    public boolean registrarUsuario(@Valid @RequestBody UsuarioDto usuarioDto){
+        logger.info("email y userId: "+ usuarioDto.email + " - "+usuarioDto.userId );
         Usuario user=new Usuario();
         user.name="Jeffrey";
         return _user.registrarUsuario(user);
@@ -78,11 +84,12 @@ public class UsersController {
 //        return _user.registrarUsuario(user);
     }
 
-    @PatchMapping
-    public boolean actualizarUsuario(){
-        Usuario user=new Usuario();
-        user.name="Jeffrey";
-        return _user.registrarUsuario(user);
+    @PatchMapping("/{id}")
+    public UsuarioDto actualizarUsuario(@RequestBody UsuarioDto usuarioDto){
+        return usuarioDto;
+        //Usuario user=new Usuario();
+        //user.name="Jeffrey";
+        //return _user.registrarUsuario(user);
     }
 
     @DeleteMapping
