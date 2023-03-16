@@ -6,7 +6,7 @@ import com.semillerogtc.gtcusermanagement.domain.Usuario;
 @Component
 public class UsersValidation {
     public boolean excecute(Usuario user){
-        if(!(user.name=="Jeff"))
+        if(!(user.name.equals("Jeff")))
             return false;
         return true;
     }

@@ -1,9 +1,14 @@
 package com.semillerogtc.gtcusermanagement.controllers;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.StreamingHttpOutputMessage.Body;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.semillerogtc.gtcusermanagement.services.UsersService;
+
+import lombok.var;
+
 import com.semillerogtc.gtcusermanagement.domain.Usuario;
 import com.semillerogtc.gtcusermanagement.domain.UsuarioDto;
 import com.semillerogtc.gtcusermanagement.domain.UsuarioDto2;
@@ -76,12 +81,17 @@ public class UsersController {
     }
 
     @PostMapping("v1/{token}")
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public String registrarUsuario(@Valid @RequestBody UsuarioDto usuarioDto) throws Exception{
+//    @ResponseStatus(code = HttpStatus.CREATED)
+    public ResponseEntity registrarUsuario(@PathVariable String token,@Valid @RequestBody UsuarioDto usuarioDto) throws Exception{
         logger.info("email y userId: "+ usuarioDto.email + " - "+usuarioDto.userId );
         Usuario user=new Usuario();
-        user.name="Jeffrey";
-        return "Hola desde método POST Version 1";
+        user.name=token;
+        var esRegistroExitoso=_user.registrarUsuario(user);
+        if(!esRegistroExitoso)
+            return new ResponseEntity("Falló la creación de usuario", HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity("Usuario creado exitosamente", HttpStatus.CREATED);
+        //Usuario user=new Usuario();
+        //user.name="Jeffrey";
         //throw new Exception("Error al crear usuario");
         //return _user.registrarUsuario(user);
 //        String user="Jeffrey";
