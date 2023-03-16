@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import com.semillerogtc.gtcusermanagement.services.UsersService;
 import com.semillerogtc.gtcusermanagement.domain.Usuario;
 import com.semillerogtc.gtcusermanagement.domain.UsuarioDto;
+import com.semillerogtc.gtcusermanagement.domain.UsuarioDto2;
 import com.semillerogtc.gtcusermanagement.common.EnvironmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,7 +20,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/usuarios/api")
 
 public class UsersController {
     @Autowired
@@ -74,14 +75,23 @@ public class UsersController {
         return _user.registrarUsuario(user);
     }
 
-    @PostMapping("/{token}")
-    public boolean registrarUsuario(@Valid @RequestBody UsuarioDto usuarioDto){
+    @PostMapping("v1/{token}")
+    public String registrarUsuario(@Valid @RequestBody UsuarioDto usuarioDto) throws Exception{
         logger.info("email y userId: "+ usuarioDto.email + " - "+usuarioDto.userId );
         Usuario user=new Usuario();
         user.name="Jeffrey";
-        return _user.registrarUsuario(user);
+        return "Hola desde método POST Version 1";
+        //throw new Exception("Error al crear usuario");
+        //return _user.registrarUsuario(user);
 //        String user="Jeffrey";
 //        return _user.registrarUsuario(user);
+    }
+    @PostMapping("v2/{token}")
+    public String registrarUsuario2(@Valid @RequestBody UsuarioDto2 usuarioDto2) throws Exception{
+        logger.info("email y userId: "+ usuarioDto2.email + " - "+usuarioDto2.userId );
+        Usuario user=new Usuario();
+        user.name="Jeffrey";
+        return "Hola desde método POST Version 2";
     }
 
     @PatchMapping("/{id}")
