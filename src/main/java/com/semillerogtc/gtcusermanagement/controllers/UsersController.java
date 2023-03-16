@@ -20,7 +20,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 
 @RestController
-@RequestMapping("/usuarios/api")
+@RequestMapping("/usuarios")
 
 public class UsersController {
     @Autowired
@@ -76,6 +76,7 @@ public class UsersController {
     }
 
     @PostMapping("v1/{token}")
+    @ResponseStatus(code = HttpStatus.CREATED)
     public String registrarUsuario(@Valid @RequestBody UsuarioDto usuarioDto) throws Exception{
         logger.info("email y userId: "+ usuarioDto.email + " - "+usuarioDto.userId );
         Usuario user=new Usuario();
