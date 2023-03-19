@@ -1,28 +1,27 @@
 package com.semillerogtc.gtcusermanagement.domain;
 
 import lombok.Builder;
-
-//import lombok.Data;
+import lombok.Data;
 //import lombok.Getter;
 
-//@Data
 //@Getter
 @Builder
+@Data
 public class Usuario {
-    public int id;
-    public String name;
-    public Integer edad;
+    private int id;
+    private String name;
+    private Integer edad;
     private String fechaNacimiento;
-    public String email;
+    private String email;
 
-    public String getFechaNacimiento(){
+    /* public String getFechaNacimiento(){
         return this.fechaNacimiento;
     } 
 
     public Usuario setFechaNacimiento(String fechaNacimiento){
         this.fechaNacimiento=fechaNacimiento;
         return this;
-    }
+    } */
 
 
 }
