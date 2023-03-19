@@ -1,4 +1,4 @@
-package com.semillerogtc.gtcusermanagement.components;
+package com.semillerogtc.gtcusermanagement.domain.components;
 
 import org.springframework.stereotype.Component;
 import com.semillerogtc.gtcusermanagement.domain.Usuario;

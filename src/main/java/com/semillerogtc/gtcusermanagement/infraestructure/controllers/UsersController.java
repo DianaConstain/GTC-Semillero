@@ -1,17 +1,17 @@
-package com.semillerogtc.gtcusermanagement.controllers;
+package com.semillerogtc.gtcusermanagement.infraestructure.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.StreamingHttpOutputMessage.Body;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import com.semillerogtc.gtcusermanagement.services.UsersService;
 
 import lombok.var;
 
 import com.semillerogtc.gtcusermanagement.domain.Usuario;
 import com.semillerogtc.gtcusermanagement.domain.UsuarioDto;
 import com.semillerogtc.gtcusermanagement.domain.UsuarioDto2;
+import com.semillerogtc.gtcusermanagement.aplication.services.UsersService;
 import com.semillerogtc.gtcusermanagement.common.EnvironmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -59,7 +59,8 @@ public class UsersController {
     @GetMapping
     public boolean consultarUsuarioPorHeader(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@RequestHeader("") String userId){
         logger.info("token y userId: "+ token + " - "+userId);
-        Usuario user=new Usuario();
+        //Usuario user=new Usuario();
+        Usuario user= Usuario.builder().name("Jeffrey").build();
         user.name="Jeffrey";
         return _user.registrarUsuario(user);
     }
@@ -67,7 +68,8 @@ public class UsersController {
     @GetMapping("/query")
     public boolean consultarUsuarioPorQueryString(@RequestParam String email,@RequestParam String userId){
         logger.info("email y userId: "+ email + " - "+userId);
-        Usuario user=new Usuario();
+        //Usuario user=new Usuario();
+        Usuario user= Usuario.builder().name("Jeffrey").build();
         user.name="Jeffrey";
         return _user.registrarUsuario(user);
     }
@@ -75,7 +77,8 @@ public class UsersController {
     @GetMapping("/uritemplate/{email}/{id}")
     public boolean consultarUsuarioPorPathUriTemplate(@PathVariable("email") String email,@PathVariable("id") String userId){
         logger.info("email y userId: "+ email + " - "+userId);
-        Usuario user=new Usuario();
+        //Usuario user=new Usuario();
+        Usuario user= Usuario.builder().name("Jeffrey").build();
         user.name="Jeffrey";
         return _user.registrarUsuario(user);
     }
@@ -84,7 +87,8 @@ public class UsersController {
 //    @ResponseStatus(code = HttpStatus.CREATED)
     public ResponseEntity registrarUsuario(@PathVariable String token,@Valid @RequestBody UsuarioDto usuarioDto) throws Exception{
         logger.info("email y userId: "+ usuarioDto.email + " - "+usuarioDto.userId );
-        Usuario user=new Usuario();
+        //Usuario user=new Usuario();
+        Usuario user= Usuario.builder().name("Jeffrey").build();
         user.name=token;
         var esRegistroExitoso=_user.registrarUsuario(user);
         if(!esRegistroExitoso)
@@ -100,7 +104,8 @@ public class UsersController {
     @PostMapping("v2/{token}")
     public String registrarUsuario2(@Valid @RequestBody UsuarioDto2 usuarioDto2) throws Exception{
         logger.info("email y userId: "+ usuarioDto2.email + " - "+usuarioDto2.userId );
-        Usuario user=new Usuario();
+        //Usuario user=new Usuario();
+        Usuario user= Usuario.builder().name("Jeffrey").build();
         user.name="Jeffrey";
         return "Hola desde método POST Version 2";
     }
@@ -115,7 +120,8 @@ public class UsersController {
 
     @DeleteMapping
     public boolean eliminarUsuario(){
-        Usuario user=new Usuario();
+        //Usuario user=new Usuario();
+        Usuario user= Usuario.builder().name("Jeffrey").build();
         user.name="Jeffrey";
         return _user.registrarUsuario(user);
     }

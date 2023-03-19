@@ -1,7 +1,9 @@
-package com.semillerogtc.gtcusermanagement.common;
+package com.semillerogtc.gtcusermanagement.infraestructure.controllers;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+
+import com.semillerogtc.gtcusermanagement.common.EnvironmentService;
 
 @Service
 //@Profile("qa")

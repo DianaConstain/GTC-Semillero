@@ -1,7 +1,9 @@
 package com.semillerogtc.gtcusermanagement.common.beans;
 
-import com.semillerogtc.gtcusermanagement.common.ProdEnvironmentService;
 import org.springframework.context.annotation.Configuration;
+
+import com.semillerogtc.gtcusermanagement.infraestructure.controllers.ProdEnvironmentService;
+
 import org.springframework.context.annotation.Bean;
 
 //@Configuration
