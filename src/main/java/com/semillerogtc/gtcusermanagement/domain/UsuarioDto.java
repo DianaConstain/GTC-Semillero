@@ -1,16 +1,23 @@
 package com.semillerogtc.gtcusermanagement.domain;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.NotNull;
+import java.util.Date;
+import lombok.Builder;
 
+@Builder
 public class UsuarioDto {
-    @NotEmpty(message="El email no puede ser vacío")
-    @NotNull(message="El email es requerido")
+    public String nombre;
+    @NotEmpty
     public String email;
-    @NotEmpty(message="El usuario no puede ser vacío")
+    @NotEmpty
+    public int edad;
+    public long celular;
+    public Date fechaNacimiento;
+    
+    /* @NotEmpty(message="El usuario no puede ser vacío")
     @NotNull(message="El usuario es requerido")
-    public String userId;
+    public String userId; */
 
-    public UsuarioDto() {
-    }
+    //public UsuarioDto() {    }
 }

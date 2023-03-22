@@ -5,8 +5,7 @@ import org.springframework.http.ResponseEntity;
 //import org.springframework.http.StreamingHttpOutputMessage.Body;
 //import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import lombok.var;
-import com.semillerogtc.gtcusermanagement.domain.Usuario;
+//import com.semillerogtc.gtcusermanagement.domain.Usuario;
 import com.semillerogtc.gtcusermanagement.domain.UsuarioDto;
 import com.semillerogtc.gtcusermanagement.domain.UsuarioDto2;
 import com.semillerogtc.gtcusermanagement.aplication.services.UsersService;
@@ -52,37 +51,59 @@ public class UsersController {
         return "Hola desde controlador usuarios";
     }
     //Header
-    @GetMapping
-    public boolean consultarUsuarioPorHeader(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@RequestHeader("") String userId){
+   @GetMapping
+    public ResponseEntity consultarUsuarioPorHeader(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@RequestHeader("") String userId){
         logger.info("token y userId: "+ token + " - "+userId);
         //Usuario user=new Usuario(); user.name="Jeffrey";
-        Usuario user= Usuario.builder().name("Jeffrey").build();
-        return _user.registrarUsuario(user);
-    }
+        //Usuario user= Usuario.builder().name("Jeffrey").build();
+        //Usuario user=new Usuario(); user.setName("Jeffrey");
+        //return _user.registrarUsuario(user);
+        UsuarioDto user=UsuarioDto.builder().email("Jeffrey").build();
+        return new ResponseEntity( _user.registrarUsuario(user),HttpStatus.OK);
+    } 
     //Query String
     @GetMapping("/query")
-    public boolean consultarUsuarioPorQueryString(@RequestParam String email,@RequestParam String userId){
+    public ResponseEntity consultarUsuarioPorQueryString(@RequestParam String email,@RequestParam String userId){
         logger.info("email y userId: "+ email + " - "+userId);
         //Usuario user=new Usuario(); user.name="Jeffrey";
-        Usuario user= Usuario.builder().name("Jeffrey").build();
-        return _user.registrarUsuario(user);
+        //Usuario user= Usuario.builder().name("Jeffrey").build();
+        //Usuario user=new Usuario(); user.setName("Jeffrey");
+        //return _user.registrarUsuario(user);
+        UsuarioDto user=UsuarioDto.builder().email("cortes@gmail.com").build();
+        return new ResponseEntity( _user.registrarUsuario(user),HttpStatus.OK);
     }
     //Uri Template
     @GetMapping("/uritemplate/{email}/{id}")
-    public boolean consultarUsuarioPorPathUriTemplate(@PathVariable("email") String email,@PathVariable("id") String userId){
+    public ResponseEntity consultarUsuarioPorPathUriTemplate(@PathVariable("email") String email,@PathVariable("id") String userId){
         logger.info("email y userId: "+ email + " - "+userId);
         //Usuario user=new Usuario(); user.name="Jeffrey";
-        Usuario user= Usuario.builder().name("Jeffrey").build();
-        return _user.registrarUsuario(user);
+        //Usuario user= Usuario.builder().name("Jeffrey").build();
+        //Usuario user=new Usuario(); user.setName("Jeffrey");
+        //return _user.registrarUsuario(user);
+        UsuarioDto user=UsuarioDto.builder().email("Jeffrey").build();
+        return new ResponseEntity( _user.registrarUsuario(user),HttpStatus.OK);
+        
+    }
+    @PostMapping("v1")
+    public ResponseEntity registrarUsuario(@RequestBody UsuarioDto usuarioDto) throws Exception{
+        logger.info("email y celular: "+ usuarioDto.email + " - "+usuarioDto.celular );
+        try{
+            var usuarioRegistrado=_user.registrarUsuario(usuarioDto);
+            return new ResponseEntity(usuarioRegistrado, HttpStatus.CREATED);
+        }catch(Exception ex){
+            return new ResponseEntity("Falló la creación de usuario, Error: "+ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @PostMapping("v1/{token}")
+   /* @PostMapping("v1/{token}")
 //    @ResponseStatus(code = HttpStatus.CREATED)
     public ResponseEntity registrarUsuario(@PathVariable String token,@Valid @RequestBody UsuarioDto usuarioDto) throws Exception{
-        logger.info("email y userId: "+ usuarioDto.email + " - "+usuarioDto.userId );
+        logger.info("email y celular: "+ usuarioDto.email + " - "+usuarioDto.celular );
         //Usuario user=new Usuario();
-        Usuario user= Usuario.builder().name("Jeffrey").build();
-        user.setName(token);
+        //Usuario user= Usuario.builder().name("Jeffrey").build();
+        //Usuario user=new Usuario();
+        //user.setName(token);
+        UsuarioDto user=UsuarioDto.builder().email("cortes@gmail.com").build();
         var esRegistroExitoso=_user.registrarUsuario(user);
         if(!esRegistroExitoso)
             return new ResponseEntity("Falló la creación de usuario", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -93,27 +114,50 @@ public class UsersController {
         //return _user.registrarUsuario(user);
 //        String user="Jeffrey";
 //        return _user.registrarUsuario(user);
+    }  */
+
+    @PostMapping("v2")
+    public ResponseEntity registrarUsuario2(@Valid @RequestBody UsuarioDto usuarioDto) throws Exception{
+        var usuarioRegistrado=_user.registrarUsuario(usuarioDto);
+        return new ResponseEntity(usuarioRegistrado, HttpStatus.CREATED);
     }
-    @PostMapping("v2/{token}")
+    /* @PostMapping("v2/{token}")
     public String registrarUsuario2(@Valid @RequestBody UsuarioDto2 usuarioDto2) throws Exception{
         logger.info("email y userId: "+ usuarioDto2.email + " - "+usuarioDto2.userId );
         //Usuario user=new Usuario(); user.name="Jeffrey";
-        Usuario user= Usuario.builder().name("Jeffrey").build();
+        //Usuario user= Usuario.builder().name("Jeffrey").build();
         return "Hola desde método POST Version 2";
-    }
+    } */
 
     @PatchMapping("/{id}")
+    public ResponseEntity actualizarUsuario(@RequestBody UsuarioDto usuarioDto){
+        UsuarioDto user=UsuarioDto.builder().email("Jeffrey").build();
+        return new ResponseEntity( _user.registrarUsuario(user),HttpStatus.OK);
+
+    }
+    /* @PatchMapping("/{id}")
     public UsuarioDto actualizarUsuario(@RequestBody UsuarioDto usuarioDto){
         return usuarioDto;
         //Usuario user=new Usuario();
         //user.name="Jeffrey";
         //return _user.registrarUsuario(user);
-    }
+    } */
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
+    public ResponseEntity eliminarUsuario(@PathVariable String id){
+        try{
+            _user.eliminarUsuario(id);
+            return new ResponseEntity( "Usuario eliminado con éxito",HttpStatus.OK);
+        }catch(Exception ex){
+            return new ResponseEntity(ex.getMessage(),HttpStatus.NO_CONTENT);
+        }
+    }
+    /* @DeleteMapping
     public boolean eliminarUsuario(){
         //Usuario user=new Usuario(); user.name="Jeffrey";
-        Usuario user= Usuario.builder().name("Jeffrey").build();
+        //Usuario user= Usuario.builder().name("Jeffrey").build();
+        //Usuario user=new Usuario(); user.setName("Jeffrey");
+        UsuarioDto user=UsuarioDto.builder().email("cortes@gmail.com").build();
         return _user.registrarUsuario(user);
-    }
+    }  */
 }
