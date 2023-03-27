@@ -85,6 +85,12 @@ public class UsersController {
         
     }
     @PostMapping("v1")
+    public ResponseEntity registrarUsuario(@Valid @RequestBody UsuarioDto usuarioDto){
+        logger.info("email y celular: "+ usuarioDto.email + " - "+usuarioDto.celular );
+        var usuarioRegistrado=_user.registrarUsuario(usuarioDto);
+        return new ResponseEntity(usuarioRegistrado, HttpStatus.CREATED);
+    }
+    /* @PostMapping("v1")
     public ResponseEntity registrarUsuario(@RequestBody UsuarioDto usuarioDto) throws Exception{
         logger.info("email y celular: "+ usuarioDto.email + " - "+usuarioDto.celular );
         try{
@@ -93,7 +99,7 @@ public class UsersController {
         }catch(Exception ex){
             return new ResponseEntity("Falló la creación de usuario, Error: "+ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    } */
 
    /* @PostMapping("v1/{token}")
 //    @ResponseStatus(code = HttpStatus.CREATED)

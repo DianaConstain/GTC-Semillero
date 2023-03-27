@@ -7,10 +7,11 @@ import lombok.Builder;
 
 @Builder
 public class UsuarioDto {
+    @NotEmpty(message="Nombre es obligatorio")
     public String nombre;
-    @NotEmpty
+    @NotEmpty(message="Email es obligatorio")
     public String email;
-    @NotEmpty
+    //@NotEmpty
     public int edad;
     public long celular;
     public Date fechaNacimiento;
