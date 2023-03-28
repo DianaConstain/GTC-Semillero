@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 //import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 //import com.semillerogtc.gtcusermanagement.domain.Usuario;
-import com.semillerogtc.gtcusermanagement.domain.UsuarioDto;
-import com.semillerogtc.gtcusermanagement.domain.UsuarioDto2;
+import com.semillerogtc.gtcusermanagement.domain.UsuarioNuevoDto;
+//import com.semillerogtc.gtcusermanagement.domain.UsuarioDto2;
 import com.semillerogtc.gtcusermanagement.aplication.services.UsersService;
 import com.semillerogtc.gtcusermanagement.common.EnvironmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +58,7 @@ public class UsersController {
         //Usuario user= Usuario.builder().name("Jeffrey").build();
         //Usuario user=new Usuario(); user.setName("Jeffrey");
         //return _user.registrarUsuario(user);
-        UsuarioDto user=UsuarioDto.builder().email("Jeffrey").build();
+        UsuarioNuevoDto user=UsuarioNuevoDto.builder().email("Jeffrey").build();
         return new ResponseEntity( _user.registrarUsuario(user),HttpStatus.OK);
     } 
     //Query String
@@ -69,7 +69,7 @@ public class UsersController {
         //Usuario user= Usuario.builder().name("Jeffrey").build();
         //Usuario user=new Usuario(); user.setName("Jeffrey");
         //return _user.registrarUsuario(user);
-        UsuarioDto user=UsuarioDto.builder().email("cortes@gmail.com").build();
+        UsuarioNuevoDto user=UsuarioNuevoDto.builder().email("cortes@gmail.com").build();
         return new ResponseEntity( _user.registrarUsuario(user),HttpStatus.OK);
     }
     //Uri Template
@@ -80,13 +80,13 @@ public class UsersController {
         //Usuario user= Usuario.builder().name("Jeffrey").build();
         //Usuario user=new Usuario(); user.setName("Jeffrey");
         //return _user.registrarUsuario(user);
-        UsuarioDto user=UsuarioDto.builder().email("Jeffrey").build();
+        UsuarioNuevoDto user=UsuarioNuevoDto.builder().email("Jeffrey").build();
         return new ResponseEntity( _user.registrarUsuario(user),HttpStatus.OK);
         
     }
     @PostMapping("v1")
-    public ResponseEntity registrarUsuario(@Valid @RequestBody UsuarioDto usuarioDto){
-        logger.info("email y celular: "+ usuarioDto.email + " - "+usuarioDto.celular );
+    public ResponseEntity registrarUsuario(@Valid @RequestBody UsuarioNuevoDto usuarioDto){
+        logger.info("email: "+ usuarioDto.email );
         var usuarioRegistrado=_user.registrarUsuario(usuarioDto);
         return new ResponseEntity(usuarioRegistrado, HttpStatus.CREATED);
     }
@@ -123,7 +123,7 @@ public class UsersController {
     }  */
 
     @PostMapping("v2")
-    public ResponseEntity registrarUsuario2(@Valid @RequestBody UsuarioDto usuarioDto) throws Exception{
+    public ResponseEntity registrarUsuario2(@Valid @RequestBody UsuarioNuevoDto usuarioDto) throws Exception{
         var usuarioRegistrado=_user.registrarUsuario(usuarioDto);
         return new ResponseEntity(usuarioRegistrado, HttpStatus.CREATED);
     }
@@ -136,8 +136,8 @@ public class UsersController {
     } */
 
     @PatchMapping("/{id}")
-    public ResponseEntity actualizarUsuario(@RequestBody UsuarioDto usuarioDto){
-        UsuarioDto user=UsuarioDto.builder().email("Jeffrey").build();
+    public ResponseEntity actualizarUsuario(@RequestBody UsuarioNuevoDto usuarioDto){
+        UsuarioNuevoDto user=UsuarioNuevoDto.builder().email("Jeffrey").build();
         return new ResponseEntity( _user.registrarUsuario(user),HttpStatus.OK);
 
     }

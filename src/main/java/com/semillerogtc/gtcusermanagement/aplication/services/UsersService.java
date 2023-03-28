@@ -1,10 +1,14 @@
 package com.semillerogtc.gtcusermanagement.aplication.services;
 
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.stereotype.Service;
+import com.semillerogtc.gtcusermanagement.domain.Telefonos;
 import com.semillerogtc.gtcusermanagement.domain.Usuario;
-import com.semillerogtc.gtcusermanagement.domain.UsuarioDto;
+import com.semillerogtc.gtcusermanagement.domain.UsuarioNuevoDto;
 import com.semillerogtc.gtcusermanagement.domain.UsuariosRepositorio;
 import com.semillerogtc.gtcusermanagement.domain.components.UsersValidation;
+
 
 @Service
 public class UsersService {
@@ -19,17 +23,23 @@ public class UsersService {
         _usersValidation=usersValidation;
     }
 
-    public Usuario registrarUsuario(UsuarioDto usuarioDto){
-        boolean resultado=_usersValidation.excecute(usuarioDto);    
+    public Usuario registrarUsuario(UsuarioNuevoDto usuarioNuevoDto){
+        boolean resultado=_usersValidation.excecute(usuarioNuevoDto);    
         
-        Usuario usuarioARegistrar=new Usuario();
+        Usuario usuarioNuevo=new Usuario();
 
-        usuarioARegistrar.setEmail(usuarioDto.email);
-        usuarioARegistrar.setEdad(usuarioDto.edad);
-        usuarioARegistrar.setCelular(usuarioDto.celular);
-        usuarioARegistrar.setName(usuarioDto.nombre);      
-
-        var usuarioRegistrado=this.usuariosRepositorio.save(usuarioARegistrar);
+        usuarioNuevo.setName(usuarioNuevoDto.nombre);  
+        usuarioNuevo.setEmail(usuarioNuevoDto.email);
+        usuarioNuevo.setEdad(usuarioNuevoDto.edad);
+        Telefonos telefono1=new Telefonos();
+        telefono1.setTelefono(usuarioNuevoDto.telefonos.get(0));
+        Set<Telefonos> telefonosSet=new HashSet<Telefonos>();
+        telefonosSet.add(telefono1);
+        //telefono1.setUsuario(usuarioARegistrar);
+        usuarioNuevo.setTelefonos(telefonosSet);  
+        //usuarioARegistrar.setCelular(usuarioDto.celular);
+        
+        var usuarioRegistrado=this.usuariosRepositorio.save(usuarioNuevo);
         return usuarioRegistrado;
     } 
 

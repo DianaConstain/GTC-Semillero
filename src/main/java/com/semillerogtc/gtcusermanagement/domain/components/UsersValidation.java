@@ -3,11 +3,11 @@ package com.semillerogtc.gtcusermanagement.domain.components;
 import org.springframework.stereotype.Component;
 //import com.semillerogtc.gtcusermanagement.domain.Usuario;
 
-import com.semillerogtc.gtcusermanagement.domain.UsuarioDto;
+import com.semillerogtc.gtcusermanagement.domain.UsuarioNuevoDto;
 
 @Component
 public class UsersValidation {
-    public boolean excecute(UsuarioDto user){
+    public boolean excecute(UsuarioNuevoDto user){
         return user.email.equals("cortesj3f");
     }
     //Se puede validar más que el email, es la estructura del email, que tenga un formato correcto
