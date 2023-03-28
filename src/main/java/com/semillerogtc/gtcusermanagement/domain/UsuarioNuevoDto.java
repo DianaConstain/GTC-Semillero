@@ -2,7 +2,7 @@ package com.semillerogtc.gtcusermanagement.domain;
 
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
-import com.semillerogtc.gtcusermanagement.domain.components.Telefono;
+
 //import javax.validation.constraints.NotNull;
 //import java.util.Date;
 import lombok.Builder;

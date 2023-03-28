@@ -3,7 +3,9 @@ package com.semillerogtc.gtcusermanagement.aplication.services;
 import java.util.HashSet;
 import java.util.Set;
 import org.springframework.stereotype.Service;
-import com.semillerogtc.gtcusermanagement.domain.Telefonos;
+
+import com.semillerogtc.gtcusermanagement.domain.Telefono;
+import com.semillerogtc.gtcusermanagement.domain.UsuarioTelefono;
 import com.semillerogtc.gtcusermanagement.domain.Usuario;
 import com.semillerogtc.gtcusermanagement.domain.UsuarioNuevoDto;
 import com.semillerogtc.gtcusermanagement.domain.UsuariosRepositorio;
@@ -27,16 +29,20 @@ public class UsersService {
         boolean resultado=_usersValidation.excecute(usuarioNuevoDto);    
         
         Usuario usuarioNuevo=new Usuario();
-
         usuarioNuevo.setName(usuarioNuevoDto.nombre);  
         usuarioNuevo.setEmail(usuarioNuevoDto.email);
         usuarioNuevo.setEdad(usuarioNuevoDto.edad);
-        Telefonos telefono1=new Telefonos();
-        telefono1.setTelefono(usuarioNuevoDto.telefonos.get(0));
-        Set<Telefonos> telefonosSet=new HashSet<Telefonos>();
-        telefonosSet.add(telefono1);
+        
+        UsuarioTelefono usuarioTelefono=new UsuarioTelefono();
+        //telefono1.setTelefono(usuarioNuevoDto.telefonos.get(0));
+        //var telefonoVO =Telefono.instance(usuarioNuevoDto.telefonos.get(0));
+        usuarioTelefono.setTelefono(usuarioNuevoDto.telefonos.get(0));
+        Set<UsuarioTelefono> telefonosSet=new HashSet<UsuarioTelefono>();
+        telefonosSet.add(usuarioTelefono);
         //telefono1.setUsuario(usuarioARegistrar);
-        usuarioNuevo.setTelefonos(telefonosSet);  
+        //usuarioNuevo.setTelefonos(telefonosSet);
+        usuarioNuevo.setTelefonos(telefonosSet);
+
         //usuarioARegistrar.setCelular(usuarioDto.celular);
         
         var usuarioRegistrado=this.usuariosRepositorio.save(usuarioNuevo);
