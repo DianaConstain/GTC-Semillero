@@ -80,4 +80,7 @@ public class UsersService {
     public String consultarUsuario(){
         return "true";
     }
+    public Usuario consultarUsuarioXEmail(String email){
+        return this.usuariosRepositorio.findByEmail(new Email(email));
+    }
 }

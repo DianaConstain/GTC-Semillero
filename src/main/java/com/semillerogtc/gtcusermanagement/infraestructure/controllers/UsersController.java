@@ -50,8 +50,13 @@ public class UsersController {
         //logger.info("Son iguales las dependencias? " + sonIguales);
         return "Hola desde controlador usuarios";
     }
+    @GetMapping("/{email}")
+    public ResponseEntity consultarUsuarioPorEmail(@PathVariable("email") String email){
+        var usuario=_user.consultarUsuarioXEmail(email);        
+        return new ResponseEntity( usuario,HttpStatus.OK);
+    } 
     //Header
-   @GetMapping
+   @GetMapping("/header")
     public ResponseEntity consultarUsuarioPorHeader(@RequestHeader(HttpHeaders.AUTHORIZATION) String token,@RequestHeader("") String userId){
         logger.info("token y userId: "+ token + " - "+userId);
         //Usuario user=new Usuario(); user.name="Jeffrey";
