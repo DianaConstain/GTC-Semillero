@@ -3,9 +3,9 @@ package com.semillerogtc.gtcusermanagement.aplication.services;
 import java.util.HashSet;
 import java.util.Set;
 import org.springframework.stereotype.Service;
-
-import com.semillerogtc.gtcusermanagement.domain.Telefono;
+//import com.semillerogtc.gtcusermanagement.domain.Telefono;
 import com.semillerogtc.gtcusermanagement.domain.UsuarioTelefono;
+import com.semillerogtc.gtcusermanagement.domain.Email;
 import com.semillerogtc.gtcusermanagement.domain.Usuario;
 import com.semillerogtc.gtcusermanagement.domain.UsuarioNuevoDto;
 import com.semillerogtc.gtcusermanagement.domain.UsuariosRepositorio;
@@ -30,7 +30,7 @@ public class UsersService {
         
         Usuario usuarioNuevo=new Usuario();
         usuarioNuevo.setName(usuarioNuevoDto.nombre);  
-        usuarioNuevo.setEmail(usuarioNuevoDto.email);
+        usuarioNuevo.setEmail(new Email(usuarioNuevoDto.email));
         usuarioNuevo.setEdad(usuarioNuevoDto.edad);
         
         UsuarioTelefono usuarioTelefono=new UsuarioTelefono();

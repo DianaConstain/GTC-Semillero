@@ -1,6 +1,7 @@
 package com.semillerogtc.gtcusermanagement.domain;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -31,8 +32,9 @@ public class Usuario {
     private String id;
     @NotEmpty(message="El nombre es obligatorio")
     private String name;
-    @NotEmpty(message="El email es obligatorio")
-    private String email;
+    //@NotEmpty(message="El email es obligatorio")
+    @Convert(converter = EmailAttributeConverter.class)
+    private Email email;
     private Integer edad;
 
     //@OneToMany(targetEntity = Telefonos.class)

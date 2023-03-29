@@ -1,5 +1,6 @@
 package com.semillerogtc.gtcusermanagement.common;
 
+import com.semillerogtc.gtcusermanagement.domain.InvalidEmailException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,11 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class RestExceptionHandler{
+    @ExceptionHandler
+    public ResponseEntity<ExceptionResponse> handleException(InvalidEmailException invalidEmailException) {
+        return buildResponseEntity(HttpStatus.BAD_REQUEST, invalidEmailException);
+    }
+
     @ExceptionHandler
     public ResponseEntity<Map<String,List<String>>> handleException(MethodArgumentNotValidException ex){
         List<String> errors=ex.getBindingResult().getFieldErrors()

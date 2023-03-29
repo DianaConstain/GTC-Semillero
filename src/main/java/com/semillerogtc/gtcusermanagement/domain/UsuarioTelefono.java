@@ -13,7 +13,6 @@ import javax.persistence.Table;
 //import lombok.Data;
 
 @Entity
-//@Data
 @Table(name = "usuarios_telefonos")
 public class UsuarioTelefono {
     @Id
