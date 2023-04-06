@@ -10,23 +10,38 @@ import com.semillerogtc.gtcusermanagement.domain.Usuario;
 import com.semillerogtc.gtcusermanagement.domain.UsuarioNuevoDto;
 import com.semillerogtc.gtcusermanagement.domain.UsuariosRepositorio;
 import com.semillerogtc.gtcusermanagement.domain.components.UsersValidation;
+import com.semillerogtc.gtcusermanagement.domain.components.PasswordEncoderService;
 
 
 @Service
 public class UsersService {
     UsersValidation _usersValidation;
     UsuariosRepositorio usuariosRepositorio;
+    PasswordEncoderService _passwordEncoderService;
 
     /* UsersService(UsersValidation usersValidation){
         _usersValidation=usersValidation;
     } */
-    UsersService(UsersValidation usersValidation,UsuariosRepositorio usuariosRepositorio){
+    /* UsersService(UsersValidation usersValidation,UsuariosRepositorio usuariosRepositorio){
         this.usuariosRepositorio=usuariosRepositorio;
         _usersValidation=usersValidation;
+    } */
+    UsersService(UsersValidation usersValidation, UsuariosRepositorio usuariosRepositorio,
+            PasswordEncoderService passwordEncoderService) {
+        this.usuariosRepositorio = usuariosRepositorio;
+        _usersValidation = usersValidation;
+        this._passwordEncoderService = passwordEncoderService;
     }
 
     public Usuario registrarUsuario(UsuarioNuevoDto usuarioNuevoDto){
-        boolean resultado=_usersValidation.excecute(usuarioNuevoDto);    
+        boolean resultado=_usersValidation.excecute(usuarioNuevoDto);
+        var pass = this.generarPassword();
+
+        var passEncriptado1 = this._passwordEncoderService.encode(pass);
+        var passEncriptado2 = this._passwordEncoderService.encode("otro");
+        var esPasswordIgual = this._passwordEncoderService.validarPassword(pass, passEncriptado1);
+        var esPassword2Igual = this._passwordEncoderService.validarPassword(pass, passEncriptado2);
+        System.out.println(esPasswordIgual); 
         
         Usuario usuarioNuevo=new Usuario();
         usuarioNuevo.setName(usuarioNuevoDto.nombre);  
@@ -72,6 +87,10 @@ public class UsersService {
 //        boolean resultado=_usersValidation.excecute(user);
 //        return resultado;
 //    }
+
+    public String generarPassword() {
+        return "clavesegura";
+    }
 
     public void eliminarUsuario(String userId){
         this.usuariosRepositorio.deleteById(userId);

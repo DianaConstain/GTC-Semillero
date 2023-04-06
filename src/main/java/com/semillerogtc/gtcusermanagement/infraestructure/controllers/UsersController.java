@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 //import com.semillerogtc.gtcusermanagement.domain.Usuario;
 import com.semillerogtc.gtcusermanagement.domain.UsuarioNuevoDto;
+import com.semillerogtc.gtcusermanagement.domain.components.JWtManagerService;
 //import com.semillerogtc.gtcusermanagement.domain.UsuarioDto2;
 import com.semillerogtc.gtcusermanagement.aplication.services.UsersService;
 import com.semillerogtc.gtcusermanagement.common.EnvironmentService;
@@ -29,6 +30,7 @@ public class UsersController {
     //@Autowired
     //@Qualifier("devEnvironmentService")
     EnvironmentService _environmentService1;
+    JWtManagerService jWtManagerService;
 
     //@Autowired
     //@Qualifier("devEnvironmentService")
@@ -36,8 +38,11 @@ public class UsersController {
 
     public final Logger logger=LoggerFactory.getLogger(UsersController.class);
 
-    UsersController(){
+    /* UsersController(){
         //logger.info("Se inicializa constructor");
+    } */
+    UsersController(JWtManagerService jWtManagerService) {
+        this.jWtManagerService = jWtManagerService;
     }
 
     @GetMapping("/ping")
@@ -139,6 +144,21 @@ public class UsersController {
         //Usuario user= Usuario.builder().name("Jeffrey").build();
         return "Hola desde método POST Version 2";
     } */
+
+    @PostMapping("/login")
+    public ResponseEntity login() {
+        return new ResponseEntity(this.jWtManagerService.generate(), HttpStatus.OK);
+    }
+
+    @PostMapping("/auth")
+    public ResponseEntity auth(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        try{
+            var jwt = this.jWtManagerService.validate(token);
+            return new ResponseEntity(jwt.toString(), HttpStatus.OK);
+        }catch (Exception ex){
+            return new ResponseEntity("Token epirado o no válido", HttpStatus.UNAUTHORIZED);
+        }
+    }
 
     @PatchMapping("/{id}")
     public ResponseEntity actualizarUsuario(@RequestBody UsuarioNuevoDto usuarioDto){
